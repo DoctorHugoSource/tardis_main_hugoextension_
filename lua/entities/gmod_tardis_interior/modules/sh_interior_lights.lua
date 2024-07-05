@@ -119,8 +119,8 @@ local function ParseLightTable(lt, interior, default_falloff)
         --     quadraticFalloff = lt.off_warn_falloff,
         -- }
     else
-        lt.off_render_table = {}
-        lt.off_warn_render_table = {}
+        lt.low_render_table = {}
+        lt.low_warn_render_table = {}
     end
 end
 
