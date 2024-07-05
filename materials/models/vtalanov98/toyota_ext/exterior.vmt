@@ -1,0 +1,36 @@
+"VertexlitGeneric"
+{
+	$basetexture "models/vtalanov98/toyota_ext/exterior"
+	$bumpmap  "models/vtalanov98/toyota_ext/e_box_bumpmap"
+	$envmaptint "[.0125 .0125 .0125]"
+	$diffuseexp 1
+	$halflambert 1
+	$nocull 0
+	$nodecal 1
+	$phong 1
+	$phongexponent 30
+	$phongalbedotint 1
+	$phongalbedoboost 255
+	$phongexponenttexture "models/vtalanov98/toyota_ext/tardis_e_r"
+	$phongboost .2
+	$phongfresnelranges "[.175 .175 .175]"
+	$rimlight               1
+	$rimlightexponent       11
+	$rimlightboost          .5
+
+	$EmissiveBlendEnabled         1
+    $EmissiveBlendStrength         0 // it is important that this is 0 by default, because when the phase effect is disabled by the user it'll use the value specified here
+    $EmissiveBlendTexture         "vgui/white"
+    $EmissiveBlendBaseTexture         "models/hugoextension/greyscales/default/exterior_greyscale"
+    $EmissiveBlendFlowTexture         "vgui/white"
+    $EmissiveBlendTint                 " {55 55 55} "
+    $EmissiveBlendScrollVector         " [ 0 0 ] "
+
+			Proxies {
+		TARDIS_PhaseEffect {
+		resultVar    $phongexponent
+		resultVar2    $EmissiveBlendStrength
+		resultVar4    $phongboost
+		}
+	}
+}
