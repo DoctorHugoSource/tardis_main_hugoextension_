@@ -92,23 +92,17 @@ local function predraw_o(self, part)
     local tab={}
 
     local function SelectLightRenderTable(lt)
-        if override then
-            if lowpower then return end
-        else
-        if self:CallHook("ShouldDrawLight",nil,lt) == false then
+        if self:CallHook("ShouldDrawLight",nil,lt) == false and (not lowpower) then
             return {}
         end
-    end
 
-        if override then  -- only if newpower is enabled
-            if (not power) and (not lowpower) then
-                return {}                           -- for blackout, force all lights off even if they have nopower enabled
-            end
+        if (override and not power) and (not lowpower) then
+            return {}
         end
 
         if (not power) and warning then
             return lt.off_warn_render_table
-        elseif not power and (not lowpower) then
+        elseif not power then
             return lt.off_render_table
         elseif warning then
             return lt.warn_render_table
@@ -234,5 +228,3 @@ ENT:AddHook("Draw", "customlighting", postdraw_o)
 ENT:AddHook("PreDrawPart", "customlighting", predraw_o)
 
 ENT:AddHook("PostDrawPart", "customlighting", postdraw_o)
-
-
