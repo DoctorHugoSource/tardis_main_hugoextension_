@@ -100,22 +100,22 @@ local function predraw_o(self, part)
             return {}
         end
 
+
+        -- i tried super fucking hard to try and have the default behavior work on non-supported extensions even when the new power system is on
+        -- but it just doesnt work so the player will just have to turn off the newpower system for any non supported extensions
+
         if (not power) and warning then
             return lt.off_warn_render_table
         elseif not power then
-            return lt.off_render_table
+            return override and lt.low_render_table or lt.off_render_table
         elseif warning then
             return lt.warn_render_table
         end
 
-        if lowpower and (not power) then
-            return lt.low_render_table
-        end
 
         if self and power then
             return lt.render_table
         end
-
 
 
     end
