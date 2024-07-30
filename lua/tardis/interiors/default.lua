@@ -88,6 +88,14 @@ T.Interior = {
         pos = Vector(0,0,-30),
         brightness = 8,
         warn_brightness = 6,
+
+
+        			-- low power lighting
+				lowpower = true,
+				low_color = Color(0,255,221),
+				low_brightness = 0.3,
+                low_pos = Vector(0,0,120),
+
         NoLO = {
             brightness = 5,
             warn_brightness = 3,
@@ -104,9 +112,11 @@ T.Interior = {
             brightness = 0.4,
             color = Color(255,255,200),
             warn_color = Color(255,143,143),
-            off_color = Color(0,120,200),
-            off_brightness = 0.1,
-            nopower = true,
+
+                    lowpower = true,
+                    low_color = Color(0,255,221),
+                    low_brightness = 0.1,
+                    low_pos = Vector(0,0,160),
         },
         console_bottom = {
             color = Color(0,170,255),
@@ -137,7 +147,8 @@ T.Interior = {
         Teleport = {
             demat = "p00gie/tardis/default/demat_int.ogg",
             mat = "p00gie/tardis/default/mat_int.ogg",
-            fullflight = "p00gie/tardis/default/full_int.ogg",
+            mat_short = "hug o/tardis/default+/base sounds/s5-7/int/mat_short/mat_short_int_s5-7.ogg",
+            fullflight = "hug o/tardis/default+/base sounds/s10/int/fastremat/fastremat_s10+.ogg",
             demat_fail = "p00gie/tardis/default/demat_fail.ogg",
             demat_hads = "p00gie/tardis/demat_hads.wav",
             interrupt = "p00gie/tardis/default/demat_interrupt.ogg",
@@ -377,8 +388,10 @@ T.Interior = {
         default_intdoors = { pos = Vector(73.559, -417.853, 47.506), ang = Angle(0,10,0), },
 
         default_sonic_dispenser_hitbox = { ang = Angle(0,90,0), },
+
+        --hugoextension parts
         tardisfireexting			= {pos = Vector(125,165,37), ang = Angle(0, -30, 0), },
-		chronoplasmicshell			= {matrixScale = Vector(20,20,20),},
+        chronoplasmicshell			= {matrixScale = Vector(20,20,20),},
     },
 
     Controls = {
@@ -421,19 +434,22 @@ T.Interior = {
 
         default_sonic_dispenser_hitbox = "sonic_dispenser",
 
+
         --hugoextension controls
-        default_button_1		    = "vortexswap",
-		default_gears2			= "windowopacity",
-		default_sliders			= "maptravel",
-		default_side_cranks2	= "returntobar",
-		default_toggles2		= "randomjazzmap",
-		default_flippers		= "manualmapdestination",
-		default_colored_lever_2	= "hadssensitivity",
-		default_colored_lever_5	= "mathop",
-		default_side_cranks1	= "mathop_shortcut",
-		default_toggles			= "vortexdrift",
-		default_ducks			= "multiloopstabiliser",
-    },
+        default_button_1		= "vortexswap",
+        default_gears2			= "windowopacity",
+        default_sliders			= "maptravel",
+        default_side_cranks2	= "returntobar",
+        default_toggles2		= "randomjazzmap",
+        default_flippers		= "manualmapdestination",
+        default_colored_lever_2	= "hadssensitivity",
+        default_colored_lever_5	= "mathop",
+        default_side_cranks1	= "mathop_shortcut",
+        default_toggles			= "vortexdrift",
+        default_ducks			= "multiloopstabiliser",
+        default_colored_lever_3	= "fastvortexremat",
+        default_spin_a_3        = "extskinchanger",  -- i would have built this into the part directly like with other extensions but due to the unusual way these controls are setup it doesnt work
+    },                                               -- idk what side effects doing this function as a control has so g i joe 
 
     TipSettings = {
         view_range_min = 40,
@@ -498,7 +514,6 @@ T.Interior = {
 
         default_spin_a_1 = {},
         default_spin_a_2 = {},
-        default_spin_a_3 = {},
         default_spin_a_4 = {},
         default_spin_a_5 = {},
 
@@ -517,22 +532,26 @@ T.Interior = {
         default_side_cranks1 = { pos = Vector(75.28, 139.87, 129.97), right = true, down = true, },
         default_side_cranks2 = { pos = Vector(-23.13, -157.55, 130.01), right = true, down = true, },
 
-        default_flippers = { pos = Vector(-36.1, 0.49, 131.31), right = true, down = true, },
-        default_spin_big = { pos = Vector(34.71, -30.58, 130.3), right = true, down = true, },
-        default_gears1 = { pos = Vector(-25.47, -28.1, 133.62), right = true, down = true, },
-        default_gears2 = { pos = Vector(-17.79, -39.58, 131.39), right = true, down = true, },
-        default_gears3 = { pos = Vector(-13.37, -28.16, 135.71), right = true, down = true, },
-        default_sonic_dispenser_hitbox = { pos = Vector(8.4, -37.31, 135.07), right = false, down = false, },
-        default_sliders = { pos = Vector(14.79, -31.19, 134.22), right = true, down = true, },
-        default_toggles2 = { pos = Vector(15.55, -24.79, 136.77), right = true, down = true, },
-        default_phone = { pos = Vector(27.75, -35.17, 130.68), right = true, down = true, },
-        default_ducks = { pos = Vector(31.21, -32.59, 130.36), right = true, down = true, },
-        default_colored_lever_1 = { pos = Vector(31.04, -6.4, 135.01), right = true, down = true, },
-        default_colored_lever_2 = { pos = Vector(31.27, -3.28, 134.69), right = true, down = true, },
-        default_colored_lever_3 = { pos = Vector(31.37, -0.02, 134.47), right = true, down = true, },
-        default_colored_lever_4 = { pos = Vector(31.12, 3.29, 135.1), right = true, down = true, },
-        default_colored_lever_5 = { pos = Vector(31.09, 6.44, 135.21), right = true, down = true, },
-        tardisfireexting		= {pos = Vector(125, 165, 63), 				text = "Fire Extinguisher", right = false, down = false},
+        default_sonic_dispenser_hitbox      = { pos = Vector(8.4, -37.31, 135.07), right = false, down = false, },
+
+
+        -- hugoextension tips
+        default_flippers                    = { pos = Vector(-36.1, 0.49, 131.31), right = true, down = true, },
+        default_spin_big                    = { pos = Vector(34.71, -30.58, 130.3), right = true, down = true, },
+        default_gears1                      = { pos = Vector(-25.47, -28.1, 133.62), right = true, down = true, },
+        default_gears2                      = { pos = Vector(-17.79, -39.58, 131.39), right = true, down = true, },
+        default_gears3                      = { pos = Vector(-13.37, -28.16, 135.71), right = true, down = true, },
+        default_sliders                     = { pos = Vector(14.79, -31.19, 134.22), right = true, down = true, },
+        default_toggles2                    = { pos = Vector(15.55, -24.79, 136.77), right = true, down = true, },
+        default_phone                       = { pos = Vector(27.75, -35.17, 130.68), right = true, down = true, },
+        default_ducks                       = { pos = Vector(31.21, -32.59, 130.36), right = true, down = true, },
+        default_colored_lever_1             = { pos = Vector(31.04, -6.4, 135.01), right = false, down = false, },
+        default_colored_lever_2             = { pos = Vector(31.27, -3.28, 134.69), right = false, down = false, },
+        default_colored_lever_3             = { pos = Vector(31.37, -0.02, 134.47), right = true, down = false, },
+        default_colored_lever_4             = { pos = Vector(31.12, 3.29, 135.1), right = true, down = false, },
+        default_colored_lever_5             = { pos = Vector(31.09, 6.44, 135.21), right = true, down = false, },
+        tardisfireexting		            = {pos = Vector(125, 165, 63), text = "Fire Extinguisher", right = false, down = false},
+        default_spin_a_3                    = {pos = Vector(-48.304, -0.009, 129.35), right = false, down = false},
     },
 
     CustomTips = {
@@ -557,18 +576,21 @@ T.Exterior = {
         DematSequenceDelays={
             [1] = 2.5
         },
-        DematFastSequenceDelays={
-            [1] = 1.5
+
+        DematFastSequenceDelays = {
+            [1] = 0.5
         },
 
         SequenceSpeed = {
          Mat = 1.5,
          Demat = 1.5
          },
+
         PrematDelay = 8.5,
+        PrematDelayShort = 1,
 
         SequenceSpeedFast = 1.5,
-        PrematSequenceDelayFast = 1.9,
+        PrematSequenceDelayFast = 0.1,
 
         SequenceSpeedVeryFast = 2.8,
         PrematSequenceDelayVeryFast = 0.1,
@@ -610,13 +632,18 @@ T.Exterior = {
             0
         },
         MatSequenceFast = {
-            120,
-            30,
             150,
             70,
             160,
             82,
             200,
+            255,		-- these have to be here because the base will 'overwrite' any extension's sequence that is shorter than the base
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
         },
         DematSequenceVeryFast = {
             255,

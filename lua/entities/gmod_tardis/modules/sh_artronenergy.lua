@@ -3,6 +3,7 @@ if SERVER then
     TARDIS.artron_values = {
         cost_demat = -540 / 144,
         cost_mat = -360 / 144,
+        cost_mat_short = -1750 / 144,  -- super expensive but it is literally a bypass for the premat delay which has been a balance staple since forever at this point
         cost_full = -1200 / 144,
         cost_controls = {
             ["cloak"] = -720 / 144,
@@ -278,6 +279,11 @@ if SERVER then
         if self:GetFastRemat() ~= true then
             self:AddArtron(TARDIS.artron_values.cost_mat)
         end
+
+        if self:GetFastVortexRemat() and (not self:GetFastRemat()) then
+            self:AddArtron(TARDIS.artron_values.cost_mat_short)
+        end
+
     end)
 
     ENT:AddHook("HADSTrigger", "artron", function(self)

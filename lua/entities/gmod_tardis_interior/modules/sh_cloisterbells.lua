@@ -27,19 +27,19 @@ if CLIENT then
     ENT:AddHook("Think", "cloistersound", function(self)
         local shouldon=self:CallHook("ShouldTurnOnCloisters")
         local shouldoff=self:CallHook("ShouldTurnOffCloisters")
-        local sound = self.metadata.Interior.Sounds.Cloister
+        -- local sound = self.metadata.Interior.Sounds.Cloister
 
-        if TARDIS:GetSetting("cloistersound") and TARDIS:GetSetting("sound") then
-            if shouldon and (not shouldoff) then
-                if not self.CloisterLoop then
-                    self.CloisterLoop = CreateSound(self, sound)
-                end
-                self.CloisterLoop:Play()
-            elseif self.CloisterLoop then
-                self.CloisterLoop:Stop()
-                self.CloisterLoop = nil
-            end
-        end
+        -- if TARDIS:GetSetting("cloistersound") and TARDIS:GetSetting("sound") then
+        --     if shouldon and (not shouldoff) then
+        --         if not self.CloisterLoop then
+        --             self.CloisterLoop = CreateSound(self, sound)
+        --         end
+        --         self.CloisterLoop:Play()
+        --     elseif self.CloisterLoop then
+        --         self.CloisterLoop:Stop()
+        --         self.CloisterLoop = nil
+        --     end
+        -- end
     end)
 end
 

@@ -374,9 +374,17 @@ if CLIENT then
                 return nil                        -- obligatory disclaimer THIS IS NOT EXPECTED to make it into the base addon because it completely overrules alot of stylistic decisions
             end
 
+        if not power then  -- fuck it was disabling lamps with power on this whole time 
             if lmp.lowpowerdisable == true then  -- still giving extension creators manual control over which lamps to have active in lowpower mode, because itll likely be too bright in some
                 return nil                       -- but still keeping all lamps disabled in full blackout mode
             end
+        end
+
+            if power then
+                if lmp.onlylowpower == true then -- only use this lamp for lowpower, similar to off_color for lights
+                    return nil
+                end
+        end
 
         else
 

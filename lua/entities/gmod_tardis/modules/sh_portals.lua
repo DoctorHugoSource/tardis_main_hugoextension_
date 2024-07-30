@@ -8,6 +8,11 @@ if SERVER then
     end)
 else
     ENT:AddHook("ShouldRenderPortal", "portals", function(self,portal,exit,origin)
+
+        -- if self:GetData("matonentsportal", false) then  -- setup attempt for visible interior during mat on player
+        --     return true, true                           -- i know this bypasses all the settings and checks it was just a test
+        -- end                                             -- this would only work if portals can be made transparent
+
         local dont,black = self:CallHook("ShouldNotRenderPortal",self,portal,exit,origin)
         if dont==nil then
             local other = self.interior

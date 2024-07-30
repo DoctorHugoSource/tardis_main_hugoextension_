@@ -6,6 +6,7 @@ TARDIS:AddKeyBind("flight-toggle",{
     section="ThirdPerson",
     func=function(self,down,ply)
         if ply==self.pilot and down then
+            if self:IsBroken() and IsValid(self.interior) then return end -- interjecting here, forcing the player to engage with the new crash system when crashing instead of fixing it with a button press (unless no interior mode is active because then there IS no console)
             TARDIS:Control("flight", ply)
         end
     end,
@@ -19,6 +20,7 @@ TARDIS:AddKeyBind("handbrake",{
     section="ThirdPerson",
     func=function(self,down,ply)
         if down and ply == self.pilot then
+            if self:IsBroken() and IsValid(self.interior) then return end  -- interjecting here, forcing the player to engage with the new crash system when crashing instead of fixing it with a button press
             TARDIS:Control("handbrake", ply)
         end
     end,
@@ -126,7 +128,9 @@ if SERVER then
         self:ToggleFlight()
         self:CallCommonHook("FlightInterrupted")
 
-        self:ExplodeIfFast()
+        if not self:IsBroken() then  -- dont blow up if in crashing mode
+            self:ExplodeIfFast()
+        end
     end
 
     function ENT:SetFlight(on)
@@ -352,10 +356,10 @@ if SERVER then
 
                         self:SetData("broken_flight_last_explode", CurTime())
                         self:SendMessage("BrokenFlightExplosion")
-                        ph:AddVelocity(-0.75 * vel + new_direction * math.Rand(2,5) )
+                        ph:AddVelocity(-0.75 * vel + new_direction * 1 )
                     else
                         self:SendMessage("BrokenFlightTurn")
-                        ph:AddVelocity(0.5 * (old_dir_mult * vel + new_direction * math.Rand(2,3)) )
+                        ph:AddVelocity(0.5 * (old_dir_mult * vel + new_direction * 1) )
                     end
 
                     local stabilize = (math.random(4) == 1)

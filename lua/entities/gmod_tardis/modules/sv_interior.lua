@@ -12,7 +12,7 @@ end)
 
 
 ENT:AddHook("FindingPosition", "interior", function(self,e,ply)
-    TARDIS:Message(ply, "Interior.FindingPosition")
+    -- TARDIS:Message(ply, "Interior.FindingPosition") -- moved into the doors addon under exterior modules/sh_interior due to the new caching system
     return true
 end)
 

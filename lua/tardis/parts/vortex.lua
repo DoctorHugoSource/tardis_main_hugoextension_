@@ -84,12 +84,14 @@ local toofar
             -- automatic flight movement
             if drift or damaged then -- enabled if vortex drift compensators are disabled or tardis is damaged (uncontrollable)
 
-                vectorx = 1000 * math.sin(2 * math.pi * 0.1 * CurTime())
+                -- vectorx = 1000 * math.sin(2 * math.pi * 0.1 * CurTime())  -- maybe dont actually move on the x axis because that breaks the vortex illusion a bit
+                vectorx = 0
                 vectory = 400 * math.sin(2 * math.pi * 0.3 * CurTime())
                 vectorz = 200 * math.sin(2 * math.pi * 0.25 * CurTime())
 
                 if damaged then
-                    vectorx = 1000 * math.sin(2 * math.pi * 0.05 * CurTime())
+                    -- vectorx = 1000 * math.sin(2 * math.pi * 0.05 * CurTime())  -- maybe dont actually move on the x axis because that breaks the vortex illusion a bit
+                    vectorx = 0
                     vectory = 400 * math.sin(2 * math.pi * 0.8 * CurTime())
                     vectorz = 200 * math.sin(2 * math.pi * 0.5 * CurTime())
                 end

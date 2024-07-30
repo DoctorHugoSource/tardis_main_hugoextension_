@@ -109,7 +109,10 @@ TARDIS:AddKeyBind("destination-jump",{
                 local pos,ang = self:GetDestinationPropTrace(ply,ply:EyeAngles())
 
                 prop:SetPos(pos)
-                prop:SetAngles(ang)
+
+                    local dir = TARDIS:FindClosestWall(prop).HitNormal:Angle()  -- retrieves the normal of the closest wall to the prop
+
+                        prop:SetAngles(Angle(ang.p, dir.y, ang.r))  -- make it face away from that wall
 
                 self:SetData("destination-trace",false)
             end
@@ -395,29 +398,35 @@ else
         return trace.HitPos,angle
     end
 
+    local function SelfCulledDestProp(self)
+
+        render.OverrideColorWriteEnable( true, false )
+        self:DrawModel()
+        render.OverrideColorWriteEnable( false, false )
+
+        render.SetBlend(0.9)
+        self:DrawModel()  -- this part right here was missing to make it work
+
+    end
+
     local function setup(ent, model, pos, ang)
         if not IsValid(ent) then return end
         local prop = ents.CreateClientProp()
 
-        prop.Draw = function(self)
-
-            render.SetBlend(0.5)
-            render.OverrideColorWriteEnable( true, false )
-            self:DrawModel()
-            self:GetChildren()[1]:DrawModel()
-            render.OverrideColorWriteEnable( false, false )
-            render.SetBlend(0.5)
-            end
-
+        -- prop.RenderOverride = SelfCulledDestProp -- self cull the destination prop like the exterior during demat
+                                                    -- not fully functional so it is deactivated for now
         prop:SetModel(model or ent:GetModel())
         prop:SetPos((pos and ent:LocalToWorld(pos)) or ent:GetPos())
         prop:SetAngles((ang and ent:LocalToWorldAngles(ang)) or ent:GetAngles())
 
         local col = prop:GetColor()
-        prop:SetColor(Color(col.r, col.g, col.b, 100))
+        prop:SetColor(Color(col.r, col.g, col.b, 230))
         prop:SetRenderMode(RENDERMODE_TRANSALPHA)
         prop:SetSkin(ent:GetSkin())
         prop:Spawn()
+        prop:SetSkin(ent:GetSkin())
+        prop:Spawn()
+
         local groups = ent:GetBodyGroups()
         if groups then
             for k,v in pairs(groups) do

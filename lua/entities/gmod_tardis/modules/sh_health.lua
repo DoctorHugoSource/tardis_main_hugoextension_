@@ -147,6 +147,11 @@ if SERVER then
         if not TARDIS:GetSetting("health-enabled") then return end
         if (data.Speed < speed_border) then return end
 
+
+        if self:IsBroken() then
+            speed_dmg_mult = 0.025  -- allow the tardis to actually fly out of control and crash instead of instantly blowing up as it usually does
+        end                         -- this sssshould still not make the tardis indestructible since any damage that takes it from 11 to 0 health will just skip this entirely
+
         self:ApplyDamage(speed_dmg_mult * data.Speed / 25)
 
         if not IsValid(self.interior) then return end
@@ -154,12 +159,12 @@ if SERVER then
         local phys = self:GetPhysicsObject()
         local vel = phys:GetVelocity():Length()
 
-        local int = self.metadata.Interior.Sounds.Damage
-        if self:GetHealth() ~= 0 and vel < 900 then
-            self.interior:EmitSound(int.Crash)
-        elseif self:GetHealth() ~= 0 and vel > 900 then
-            self.interior:EmitSound(int.BigCrash)
-        end
+        -- local int = self.metadata.Interior.Sounds.Damage  -- replacing this with a self made impact feedback system similar to the exterior impact
+        -- if self:GetHealth() ~= 0 and vel < 900 then
+        --     self.interior:EmitSound(int.Crash)
+        -- elseif self:GetHealth() ~= 0 and vel > 900 then
+        --     self.interior:EmitSound(int.BigCrash)
+        -- end
     end)
 
     ENT:AddHook("OnHealthChange", "wiremod", function (self)

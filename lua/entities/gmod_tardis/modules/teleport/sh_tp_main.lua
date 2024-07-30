@@ -126,12 +126,12 @@ if SERVER then
             self:Mat(callback)
             return
         end
-    
+
         if self:CallHook("CanDemat", true, true) == false then
             if callback then callback(false) end
             return
         end
-    
+
         self:SetData("demat-fast-prev", self:GetFastRemat());
         self:SetFastRemat(true)
         self:SetData("fastdemat",true)
@@ -173,11 +173,13 @@ if SERVER then
 
                  if self:GetMatHop() and self:GetFastRemat() then timerdelay = teleport_md.PrematSequenceDelayVeryFast
 
-                    else if self:GetFastRemat() then timerdelay = teleport_md.PrematSequenceDelayFast
+                    elseif self:GetFastRemat() then timerdelay = teleport_md.PrematSequenceDelayFast
 
-                        else timerdelay = teleport_md.PrematDelay
+                        elseif self:GetFastVortexRemat() and (not self:IsLowHealth()) then timerdelay = teleport_md.PrematDelayShort
 
-                    end
+                            else timerdelay = teleport_md.PrematDelay
+
+
                 end
 
             self:SetData("matdelay",timerdelay, true)
@@ -382,13 +384,20 @@ else
             local ext = self.metadata.Exterior.Sounds.Teleport
             local int = self.metadata.Interior.Sounds.Teleport
             local pos=data[1]
-            if LocalPlayer():GetTardisData("exterior")==self and (not self:GetFastRemat()) then
+            if LocalPlayer():GetTardisData("exterior") == self and (not self:GetFastRemat()) then  -- wait holy fuck this is referring to thirdpeson camera view
                 if self:IsLowHealth() then
                     if shouldPlayExterior then
                         self:EmitSound(ext.mat_damaged)
                     end
                     if shouldPlayInterior then
                         self.interior:EmitSound(int.mat_damaged or ext.mat_damaged)
+                    end
+                elseif self:GetFastVortexRemat() then
+                    if shouldPlayExterior then
+                        self:EmitSound(ext.mat_short)
+                    end
+                    if shouldPlayInterior then
+                        self.interior:EmitSound(int.mat_short or ext.mat_short)
                     end
                 else
                     if shouldPlayExterior then
@@ -398,8 +407,10 @@ else
                         self.interior:EmitSound(int.mat or ext.mat)
                     end
                 end
-            elseif not self:GetFastRemat() and shouldPlayExterior then
-                if self:IsLowHealth() then
+            elseif not self:GetFastRemat() and shouldPlayExterior then  -- this is referring to actually being outside of the tardis wtf this could use some documentation
+                if self:GetFastVortexRemat() then
+                    sound.Play(ext.mat_short,pos)
+                elseif self:IsLowHealth() then
                     sound.Play(ext.mat_damaged,pos)
                 else
                     sound.Play(ext.mat,pos)

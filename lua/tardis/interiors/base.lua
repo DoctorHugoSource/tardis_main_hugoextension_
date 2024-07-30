@@ -28,7 +28,8 @@ T.Interior = {
             Artron = "p00gie/tardis/force_artron.wav",
         },
         Teleport = {                        -- uses exterior sounds if not specified
-            mathop = "hug o/tardis/default+/interior/full/no_filter/int_matop_full.wav",
+            mathop = "hug o/tardis/default+/base sounds/s10/int/mathop/int_matop_full.wav",
+            mat_short = "hug o/tardis/default+/base sounds/s10/int/mat_short/mat_short_int_s10+.ogg",  -- for fast vortex remat (not to be confused with fast remat)
         },
         Power = {
             On = "drmatt/tardis/power_on.wav",
@@ -165,6 +166,7 @@ T.Exterior = {
             demat_hads = "p00gie/tardis/base/demat_hads.wav",
             demat_fail = "drmatt/tardis/demat_fail.wav",
             mat = "p00gie/tardis/base/mat.wav",
+            mat_short = "hug o/tardis/default+/base sounds/s10/ext/mat_short/mat_short_ext_s10+.ogg",  -- for fast vortex remat (not to be confused with fast remat)
             mat_damaged = "jeredek/tardis/mat_damaged.wav",
             mat_fail = "p00gie/tardis/mat_fail.wav",
             mat_fast = "p00gie/tardis/base/mat_fast.wav",
@@ -172,8 +174,8 @@ T.Exterior = {
             fullflight = "p00gie/tardis/base/full.wav",
             fullflight_damaged = "drmatt/tardis/full_damaged.wav",
             interrupt = "p00gie/tardis/base/repairfinish.wav",
-            mathop_demat = "hug o/tardis/default+/exterior/demat/no_filter/demat_ext_mathop.wav",
-            mathop_mat = "hug o/tardis/default+/exterior/mat/no_filter/mat_ext_mathop.wav",
+            mathop_demat = "hug o/tardis/default+/base sounds/s10/ext/mathop_demat/demat_ext_mathop.wav",
+            mathop_mat = "hug o/tardis/default+/base sounds/s10/ext/mathop_mat/mat_ext_mathop.wav",
         },
         RepairFinish = "p00gie/tardis/base/repairfinish.wav",
         Lock = "drmatt/tardis/lock.wav",
@@ -212,7 +214,7 @@ T.Exterior = {
             model = "models/doctorwho1200/toyota/2013timevortex.mdl",
             pos = Vector(0,0,50),
             ang = Angle(0,0,0),
-            scale = 10
+            scale = 5
         }
     },
     Teleport = {
@@ -226,6 +228,7 @@ T.Exterior = {
         PrematDelay = 8.5,
         PrematSequenceDelayFast = 1.9,
         PrematSequenceDelayVeryFast = 0.1,  -- for mathop
+        PrematDelayShort = 1,  -- for fast vortex remat (not to be confused with fast remat)
 
         DematVeryFastSequenceDelays={  -- for mathop
             [1] = 0

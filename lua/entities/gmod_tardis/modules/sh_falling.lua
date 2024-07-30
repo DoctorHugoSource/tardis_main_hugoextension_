@@ -175,6 +175,7 @@ if SERVER then
         end
 
         if stopped then
+            ph:SetMaterial("default")
             self:SetData("vertbrakes", false)
             self:CancelTimer("vertbrakes")
             self:SetData("slidingspeed", false)

@@ -29,12 +29,13 @@ local E = {
     Sounds = {
         Teleport = {
             demat = "p00gie/tardis/default/demat_ext.ogg",
-            demat_fast = "p00gie/tardis/base/demat.wav",
+            demat_fast = "hug o/tardis/default+/base sounds/s10/ext/fastdemat/demat_ext_fast_s10+.ogg",
             demat_hads = "p00gie/tardis/demat_hads.wav",
             mat = "p00gie/tardis/default/mat_ext.ogg",
-            mat_fast = "p00gie/tardis/default/mat_fast.ogg",
+            mat_short = "hug o/tardis/default+/base sounds/s5-7/ext/mat_short/mat_short_ext_s5-7.ogg",
+            mat_fast = "hug o/tardis/default+/base sounds/s10/ext/fastmat/mat_ext_fast_s10+.ogg",
             mat_damaged_fast = "p00gie/tardis/mat_damaged_fast.wav",
-            fullflight = "p00gie/tardis/default/full_ext.ogg",
+            fullflight = "hug o/tardis/default+/base sounds/s10/int/fastremat/fastremat_s10+.ogg",
             interrupt = "drmatt/tardis/repairfinish.wav",
         },
         Door = {
@@ -58,8 +59,9 @@ local E = {
         DematSequenceDelays={
             [1] = 2.5
         },
-        DematFastSequenceDelays={
-            [1] = 1.5
+
+        DematFastSequenceDelays = {
+            [1] = 0.5
         },
 
     },

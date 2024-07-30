@@ -11,8 +11,16 @@ if SERVER then
                 ply:SetActiveWeapon(ply:GetWeapon("tardis_hands"))
                 ply:SetTardisData("outside",true,true)
                 ply:SetTardisData("outsideang",ply:EyeAngles(),true)
-                ply:SetTardisData("outsidecool", CurTime()+0.5)
-                ply:SetEyeAngles(self:LocalToWorldAngles(Angle(10,180,0)))
+                ply:SetTardisData("outsidecool", CurTime() + 0.5)
+
+
+                timer.Simple( 0, function() -- necessary to actually determine if the player is in destination mode 1 frame later
+
+                    if not ply:GetTardisData("destination") then  -- if you activate destination mode while in thirdperson i dont want the camera to snap 
+                        ply:SetEyeAngles(self:LocalToWorldAngles(Angle(10,180,0)))
+                    end
+                end)
+
                 self:CallHook("Outside", ply, enabled)
             else
                 if ply:GetTardisData("activewep") then
