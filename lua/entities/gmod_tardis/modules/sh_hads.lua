@@ -47,9 +47,9 @@ if SERVER then
             self:AutoDemat()
             self:CallHook("HADSTrigger")
             self:SetData("hads-need-remat", true, true)
-            self:Timer("HadsRematTime", math.random(10,25), function()
-                if self:GetData("hads-need-remat", false) then
-                    self:SetData("hads-auto-remat", true, true)
+            self:Timer("HadsRematTime", 20, function()  -- math.random(10,25)  -- proposing the removal of this randomness
+                if self:GetData("hads-need-remat", false) then                 -- because with the key, the player's personal tardis can be recalled at will
+                    self:SetData("hads-auto-remat", true, true)                -- so having a consistent timeframe to do that within sounds like a good thing
                     self:Mat(function(result)
                         if result then
                             TARDIS:Message(self:GetCreator(), "HADS.Mat")
