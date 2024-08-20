@@ -414,8 +414,7 @@ T.Interior = {
         default_crank6 = "cloak",
         default_tumblers = "vortex_flight",
         default_button2 = "toggle_scanners",
-        default_red_flick_switch = "engine_release",
-        default_bouncy_lever = "fastreturn",
+        default_red_flick_switch = "fastreturn",
         default_key = "toggle_console",
         default_sonic_charger = "sonic_dispenser",
         default_spin_crank = "hads",
@@ -443,11 +442,13 @@ T.Interior = {
         default_toggles2		= "randomjazzmap",
         default_flippers		= "manualmapdestination",
         default_colored_lever_2	= "hadssensitivity",
+        default_colored_lever_1	= "timeswap",
         default_colored_lever_5	= "mathop",
         default_side_cranks1	= "mathop_shortcut",
         default_toggles			= "vortexdrift",
         default_ducks			= "multiloopstabiliser",
         default_colored_lever_3	= "fastvortexremat",
+        default_bouncy_lever    = "timetravel_increment",
         default_spin_a_3        = "extskinchanger",  -- i would have built this into the part directly like with other extensions but due to the unusual way these controls are setup it doesnt work
     },                                               -- idk what side effects doing this function as a control has so g i joe 
 
