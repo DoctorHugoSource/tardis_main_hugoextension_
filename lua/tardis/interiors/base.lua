@@ -129,9 +129,27 @@ T.Exterior = {
     TimeVortexes = {  -- technically 'vortices' but shutup
         Swirl = {
             model = "models/doctorwho1200/toyota/2014timevortex.mdl",
-            color = Color(0,10,40):ToVector(),  -- interior window tint
-            tint = Color(0, 126, 178):ToVector(),  -- exterior window tint
-            Extambient = Color(53, 72, 80),  -- ambient color for exterior lighting
+            color = Color(1,25,46):ToVector(),  -- interior window tint
+            tint = Color(5,39,70):ToVector(),  -- exterior window tint
+            Extambient = Color(56,75,94),  -- ambient color for exterior lighting
+            },
+        SwirlFuture = {
+            model = "models/doctorwho1200/toyota/2014timevortex_future.mdl",
+            color = Color(63,1,11):ToVector(),  -- interior window tint
+            tint = Color(70,5,10):ToVector(),  -- exterior window tint
+            Extambient = Color(94,56,59),  -- ambient color for exterior lighting
+            },
+        Plasma = {
+            model = "models/doctorwho1200/coral/2005timevortex.mdl",
+            color = Color(1, 9, 92):ToVector(),
+            tint = Color(0, 14, 141):ToVector(),
+            Extambient = Color(41, 62, 85),
+            },
+        PlasmaFuture = {
+            model = "models/doctorwho1200/coral/2005timevortex_future.mdl",
+            color = Color(92, 1, 6):ToVector(),
+            tint = Color(141, 0, 12):ToVector(),
+            Extambient = Color(85, 41, 43),
             },
         Nebula = {
             model = "models/doctorwho1200/toyota/2013timevortex.mdl",
@@ -139,11 +157,23 @@ T.Exterior = {
             tint = Color(60, 30, 150):ToVector()*3,
             Extambient = Color(150, 120, 200),
             },
-        Clouds = {
+        NebulaFuture = {
+            model = "models/doctorwho1200/toyota/2013timevortex_future.mdl",
+            color = Color(158, 24, 14):ToVector()*3,
+            tint = Color(107, 6, 3):ToVector()*3,
+            Extambient = Color(197, 55, 45),
+            },
+        CloudsFuture = {
             model = "models/doctorwho1200/copper/2010timevortex.mdl",
             color = (Color(255, 120, 30):ToVector()*5),
             tint = (Color(255, 120, 30):ToVector()*5),
             Extambient = Color(255, 120, 30),
+            },
+        Clouds = {
+            model = "models/doctorwho1200/copper/2010timevortex_past.mdl",
+            color = (Color(49, 70, 95):ToVector()*2),
+            tint = (Color(33, 52, 77):ToVector()*1),
+            Extambient = Color(45, 62, 83),
             },
         Water = {
             model = "models/hugoextension/tuatvortex/tuattimevortex.mdl",
@@ -151,11 +181,29 @@ T.Exterior = {
             tint = Color(109, 160, 187):ToVector(),  -- exterior window tint
             Extambient = Color(160, 220, 255),  -- ambient color for exterior lighting
             },
+        WaterFuture = {
+            model = "models/hugoextension/tuatvortex/tuattimevortex_future.mdl",
+            color = Color(255, 149, 163):ToVector()*3,  -- interior window tint
+            tint = Color(180, 88, 103):ToVector(),  -- exterior window tint
+            Extambient = Color(255, 160, 173),  -- ambient color for exterior lighting
+            },
         Fiery = {
             model = "models/hugoextension/2023/2023vortex.mdl",
             color = Color(121,37,4):ToVector()*3,  -- interior window tint
             tint = Color(136,27,0):ToVector()*2,  -- exterior window tint
             Extambient = Color(116,59,37),  -- ambient color for exterior lighting
+            },
+        FieryPast = {
+            model = "models/hugoextension/2023/2023vortex_past.mdl",
+            color = Color(29,58,187):ToVector()*3,  -- interior window tint
+            tint = Color(36,79,197):ToVector(),  -- exterior window tint
+            Extambient = Color(73,138,199),  -- ambient color for exterior lighting
+            },
+        Clockwork = {
+            model = "models/hugoextension/clockworkvortex/clockvortex.mdl",
+            color = Color(77, 59, 20):ToVector()*3,  -- interior window tint
+            tint = Color(77, 59, 20):ToVector()*2,  -- exterior window tint
+            Extambient = Color(75, 59, 26),  -- ambient color for exterior lighting
             },
     },
     Sounds = {

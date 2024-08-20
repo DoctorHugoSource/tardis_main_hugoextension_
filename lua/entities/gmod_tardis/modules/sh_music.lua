@@ -26,6 +26,14 @@ if SERVER then
         end
     end
 
+    -- ENT:OnMessage("play-music", function(self, data, ply)
+    --     self:PlayMusic(data[1], ply)
+    -- end)
+
+    -- ENT:OnMessage("stop-music", function(self, data, ply)
+    --     self:StopMusic()
+    -- end)
+
     ENT:OnMessage("play-music", function(self, data, ply)
         self:PlayMusic(data[1], ply)
     end)
@@ -33,6 +41,17 @@ if SERVER then
     ENT:OnMessage("stop-music", function(self, data, ply)
         self:StopMusic()
     end)
+
+    -- exterior music disabled for now because it doesnt support youtube songs 
+    -- due to a gmod bug
+
+    -- ENT:OnMessage("play-music", function(self, data, ply)
+    --     self:SetData("delocalsong", "jazztronauts/music/events/youdiditagain.mp3", true) -- BASS the FUCKING PIECE OF SHIT doesnt support .mp4 on 3d audio on sound.PlayURL
+    -- end)                                                                                 -- SO it will ONLY WORK ON local sound files which will require an entirely new system later
+    --                                                                                      -- idfk how to do UI so its just hardcoded for now fuck it this song is a banger anyway
+    -- ENT:OnMessage("stop-music", function(self, data, ply)
+    --     self:SetData("delocalsong", nil, true)
+    -- end)
 
     return
 end
