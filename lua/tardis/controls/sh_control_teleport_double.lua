@@ -16,7 +16,7 @@ TARDIS:AddControl({
 
         local tp = self:GetData("teleport")
         local vx = self:GetData("vortex")
-print (on)
+
         if (tp and on) or (vx and on) or (not on and not tp and not vx) then  -- basically it will only return teleport when the part is off or if in vortex/teleport and it *is* on
             TARDIS:Control("teleport", ply, part)
         end
