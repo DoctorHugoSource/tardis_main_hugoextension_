@@ -123,11 +123,13 @@ if SERVER then
         end
         if dmginfo:GetDamage() <= 0 then return end
         self:ApplyDamage(dmginfo:GetDamage() / 2)
-        if not IsValid(self.interior) then return end
-        local int = self.metadata.Interior.Sounds.Damage
-        if dmginfo:IsDamageType(DMG_BLAST) and self:GetHealth() ~= 0 then
-            self.interior:EmitSound(int.Explosion)
-        end
+
+        -- if not IsValid(self.interior) then return end                -- much like below this is being replaced with a reworked damage effects function
+        -- local int = self.metadata.Interior.Sounds.Damage
+        -- if dmginfo:IsDamageType(DMG_BLAST) and self:GetHealth() ~= 0 then
+        --     self.interior:EmitSound(int.Explosion)
+        -- end
+
     end)
 
     ENT:AddHook("PhysicsCollide", "Health", function(self, data, collider)
@@ -143,6 +145,7 @@ if SERVER then
         local vert = self:IsVerticalLanding(data)
         local speed_border = vert and 1500 or 300
         local speed_dmg_mult = vert and 0.2 or 1
+        local speed_dmg_mult_s = vert and 0.2 or 1  -- unfiltered damage value
 
         if not TARDIS:GetSetting("health-enabled") then return end
         if (data.Speed < speed_border) then return end
@@ -150,9 +153,14 @@ if SERVER then
 
         if self:IsBroken() then
             speed_dmg_mult = 0.025  -- allow the tardis to actually fly out of control and crash instead of instantly blowing up as it usually does
-        end                         -- this sssshould still not make the tardis indestructible since any damage that takes it from 11 to 0 health will just skip this entirely
+        end                         -- this doesnt make the tardis invincible since any damage that takes it from 11 to 0 health will just skip this entirely
 
         self:ApplyDamage(speed_dmg_mult * data.Speed / 25)
+
+
+            local sdmg = speed_dmg_mult_s * data.Speed / 25  -- use the raw damage value to keep the amount of sparks intense even with the broken damage reduction
+
+            self:NewBreakDownEffects_Sparks(self, sdmg)  -- for sending over to newcrashing.lua
 
         if not IsValid(self.interior) then return end
 
