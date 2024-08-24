@@ -26,6 +26,14 @@ function ENT:Initialize()
         phys:Wake()
     end
 
+    if self == cmb_tdg then  -- if deployed by combine, cleanup after 60 seconds
+        timer.Simple(60, function()
+            if IsValid(self) then
+            self:Remove()
+            end
+        end)
+    end
+
     if WireLib then
         local inNames = {"Activate","Radius"}
         local inTypes = {"NORMAL","NORMAL"}
@@ -93,9 +101,13 @@ function ENT:TurnOn(active)
         phys:EnableGravity(false)
         phys:SetVelocity(Vector(0, 0, 15))
 
+        if self == cmb_tdg then                                 -- use combine sounds if deployed by combine
+        sound.Play("npc/scanner/combat_scan2.wav", self:GetPos())
+        else
         sound.Play("drmatt/tardis/seq_ok.wav", self:GetPos())
+        end
 
-        if IsValid(self.LastActivator) then
+        if IsValid(self.LastActivator) and self.LastActivator:IsPlayer() then
             TARDIS:Message(self.LastActivator, "TimeDistortionGenerator.Starting")
         end
 
@@ -110,7 +122,11 @@ function ENT:TurnOn(active)
 
         phys:EnableGravity(true)
 
+        if self == cmb_tdg then
+        sound.Play("npc/roller/mine/rmine_predetonate.wav", self:GetPos())
+        else
         sound.Play("drmatt/tardis/seq_bad.wav", self:GetPos())
+        end
 
         if IsValid(self.LastActivator) then
             TARDIS:Message(self.LastActivator, "TimeDistortionGenerator.Disabled")
@@ -128,7 +144,9 @@ function ENT:Use(ply)
     self.LastActivator = ply
 
     if self:GetEnabled() then
+        if not self == cmb_tdg then  -- if deployed by combine, dont allow it to be turned off by the player
         self:TurnOn(false)
+        end
     else
         self:TurnOn(true)
     end
@@ -150,14 +168,20 @@ function ENT:Think()
         self.On = true
         self:SetEnabled(true)
 
+        if self.LastActivator:IsPlayer() then
         TARDIS:Message(self.LastActivator, "TimeDistortionGenerator.Enabled")
         self.LastActivator = nil
+        end
 
         self:GetPhysicsObject():SetVelocity(Vector(0, 0, 0))
         self:SetColor(Color(164, 90, 250, self:GetColor().a))
         self:TriggerWire("Active",1)
 
+        if self == cmb_tdg then
+        sound.Play("weapons/cguard/charging.wav", self:GetPos())
+        else
         sound.Play("drmatt/tardis/power_on.wav", self:GetPos())
+        end
 
         local int
         for i,v in ipairs(ents.FindByClass("gmod_tardis_interior")) do
@@ -197,10 +221,18 @@ function ENT:Break()
 
     self:TriggerWire("Active",0)
 
-    local effect_data = EffectData()
-    effect_data:SetOrigin(self:GetPos())
-    effect_data:SetMagnitude(10)
-    util.Effect("Explosion", effect_data)
+    if self == cmb_tdg then      -- different combine specific behavior; when disabled with sonic, dont explode and instead shut it down normally --> ("player hacked it")
+        sound.Play("npc/roller/mine/rmine_predetonate.wav", self:GetPos())
+    end
+
+    if self.EntHealth <= 0 then
+
+        local effect_data = EffectData()
+        effect_data:SetOrigin(self:GetPos())
+        effect_data:SetMagnitude(10)
+        util.Effect("Explosion", effect_data)
+
+    end
 end
 
 function ENT:OnTakeDamage(damage)
