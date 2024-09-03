@@ -63,6 +63,11 @@ T.Interior = {
     -- PhaseMult = 0.1,            -- phase effect intensity multiplier
     -- PhongBoostMult = 5,         -- 'glossiness' multiplier
     -- },
+    Sdoorlight = {  -- simulated doorlight
+		dir1 = 2,  -- two directions, one for each door, which tells the light which directions to project in
+		dir2 = 3,  -- this can differ depending on the door's model axis, but typically: 0/1 = front/back, 2/3 = right/left, 4/5 = above/below
+        timing = 40  -- determines the timing for when the effect fades in, while the door opens, to try and hide the light popping in
+		},
         ProjectedLight = {  -- all the default values, a baseline that should work with any interior, but fine tuning is encouraged
         BrightnessMult = 2, --multiplier for the outside-inside light bleed
         Distance = 800, --Distance you want the lightbleed to reach inside
@@ -84,8 +89,8 @@ T.Interior = {
         [99] = "",
         },
         LightOverride = {
-        basebrightness = 0.3,    --Base interior brightness when power is on.
-        nopowerbrightness = 0.05, --Interior brightness with no power. Should always be darker than basebrightness.
+        basebrightness = 0.3,    --Base interior brightness when power is on
+        nopowerbrightness = 0.05, --Interior brightness with no power, Should always be darker than basebrightness
         viewmodeladd = 0.0       -- used to boost the viewmodel light override because it's too dark sometimes
     },
     ScreenDistance = 500,
