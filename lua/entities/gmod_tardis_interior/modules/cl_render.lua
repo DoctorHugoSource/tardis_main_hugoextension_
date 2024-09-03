@@ -1,5 +1,7 @@
 -- Rendering override
 
+
+
 local function predraw_o(self, part)
     if not TARDIS:GetSetting("lightoverride-enabled") then return end
     local lo = self.metadata.Interior.LightOverride
@@ -34,6 +36,7 @@ local function predraw_o(self, part)
         end
     end
 
+    self.br = br
 
     if power and self:GetData("CustomInteriorLightColorEnabled",false) == true then  -- override int color in real time if desired
 
@@ -151,29 +154,54 @@ end
 local funcnum = 0.1
 local funcnumcur = 0.1
 
+
 local function predraw_od (self, part)  -- okay so this is a bunch of junk code to try and fix the disparity between exterior and interior door lighting
+
+    local smd = self.metadata.Interior.Sdoorlight  -- simulated doorlight metadata
 
     if not GetConVar("hugoextension_tardis2_UniversalDoorlight"):GetBool() == true then return end
 
     if not (part and part.ID == "door") then return end
 
+    local timing = smd.timing
+
 
 -- todo: add metadata and an extension-level opt in to this feature (something like 'metadata.doorlight = enabled')
+
+-- todo: probably refactor all of this because i dont even understand this math.approach loop anymore, i made this like 3 months ago
 
 
             if self:GetData("doorstatereal",false) then  -- do this when the door is open/opening
                 funcnum = 0.8
-                n = math.Approach(funcnumcur, funcnum, FrameTime() * (funcnumcur * funcnumcur) * 130)  -- okay the entire reason for this is very convoluted;
-            else                                                                                    -- i need a *sharp* exponential increase here for this effect to work -
-                funcnum = 0.01                                                                      -- if the effect applies too early, youll see the back face of the door lit up which breaks it
-                n = math.Approach(funcnumcur, funcnum, FrameTime() * (funcnumcur / funcnumcur) * 3) -- if it applies too late, you see the light pop in which also breaks it
-            end                                                                                     -- thats why it has to quickly fade in at just right right time, when the edge of the door faces you
+                n = math.Approach(funcnumcur, funcnum, FrameTime() * (funcnumcur * funcnumcur) * timing)  -- this is complicated since this function is kind of limited
+            else                                                                                    -- need a sharp exponential increase here for this effect to work
+                funcnum = self.br                                                                   -- if the effect applies too early, the back face of the door lights up
+                n = math.Approach(funcnumcur, funcnum, FrameTime() * (funcnumcur / funcnumcur) * 3) -- if it applies too late, the light pops in
+            end                                                                                     -- it has to pop in with precise timing
 
 
         local locallight = render.GetLightColor(self.exterior.parts.door:GetPos() + Vector(0,0,50)) -- use environment lighting to determine brightness and color
                                                                                                     -- hopefully accurate to the actual outside in most maps
-        local nvec = locallight * (n * (6 * locallight))  -- make light level influence itself, kinda like an exponent because for some reason environment lighting is not linear
 
+
+            if StormFox2 then  -- update: adjust door light to time of day for time travel support
+                local timemodifier = StormFox2.Time.Get()
+
+                if (timemodifier <= 360) or (timemodifier >= 1080) then
+
+                if timemodifier >= 1080 then
+                    timemodifier = math.abs(timemodifier - 1440)
+                end
+
+                locallight = locallight * (timemodifier / 1440)
+                end
+
+            end
+
+
+
+        local nvec = locallight * (n * (6 * locallight))  -- make light level influence itself, kinda like an exponent because for some reason environment lighting is not linear
+                                    -- ^ these numbers are basically random, i dont understand any of this but it worked through trial and error
 
             if self:GetData("vortex", false) then  -- retroactively added; change to vortex lighting during vortex travel
 
@@ -193,27 +221,15 @@ local function predraw_od (self, part)  -- okay so this is a bunch of junk code 
             nvec.y = math.Clamp(nvec.y, 0, 1)
             nvec.z = math.Clamp(nvec.z, 0, 1)
 
-    if self:DoorOpen() == true then                       -- apply the calculated lighting via this SetModelLighting function
-        render.SetModelLighting(2, nvec.x,nvec.y,nvec.z)  -- this probably gets used like once per year, but this is where the effect comes to life
-        render.SetModelLighting(3, nvec.x,nvec.y,nvec.z)  -- it's like ResetModelLighting except you can specify it to project from one specific direction;
-    end                                                   -- i use that to project the light color onto the front of both door panels when they're open
+    if self:DoorOpen() == true then                              -- apply the calculated lighting via this SetModelLighting function
+        render.SetModelLighting(smd.dir1, nvec.x,nvec.y,nvec.z)  -- this function is probably used once per millennium but here it enables the entire effect
+        render.SetModelLighting(smd.dir2, nvec.x,nvec.y,nvec.z)  -- it's like ResetModelLighting except you can specify it to project from one specific direction;
+    end                                                          -- i use that to project the light color onto the front of both door panels when they're open
 
         funcnumcur = n  -- close the math.approach loop
 
 end
-    -- render.SetModelLighting(2, n,n,n)
-    -- render.SetModelLighting(3, n,n,n)
 
-    -- if self:GetData("doorstatereal",false) then
-    --     funcnum = 0.8
-    --     n = funcnumcur + (funcnum - funcnumcur) * math.abs(0.4) * FrameTime()
-    -- else
-    -- local nvec = self.exterior.intprojectedlightcolor:ToVector() * n
-    -- math.Approach(funcnumcur, funcnum, FrameTime() * 2)
-
-    -- local rate = (1 - math.exp(-0.7 * FrameTime()))
-    -- print (render.GetLightColor(self.exterior.parts.door:GetPos() + Vector(0,0,50)))
-    -- local n = self.exterior.intprojectedlightcolor:ToVector()
 
 
 ENT:AddHook("PreDrawPart", "customlighting2", predraw_od)
