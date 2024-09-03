@@ -22,7 +22,8 @@ if SERVER then
         self:SetPos(self.exterior:LocalToWorld(self.pos))
         self:SetAngles(self.exterior:LocalToWorldAngles(self.ang))
         self:SetParent(self.exterior)
-    end
+        self:SetModelScale(0,0)  -- workaround for stormfox; for now, it seems impossible to disable projected texture shadow rendering, so this gets around that
+    end                                                                                                         -- ^ stormfox uses this for some map light rendering features
 
 else
 
@@ -38,7 +39,7 @@ local active
 local toofar
 
 -- todo: instead of automatically moving the tardis back upon releasing a key, make it stay in the spot and instead WASD just increments the vector, so you can stay wherever you want
--- basically more natural and more like actual 3d flight -- done 
+-- basically more natural and more like actual 3d flight -- done
 
 -- also make it align with the tardis' orientation instead of fixing it to an angle of 0,0,0
 
